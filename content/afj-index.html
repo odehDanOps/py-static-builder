@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="dns-prefetch" href="//afjfarms.com">
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="//use.fontawesome.com">
+<link rel="dns-prefetch" href="//luday.se">
+<link rel="dns-prefetch" href="//wa.me">
+<link rel="dns-prefetch" href="//maps.googleapis.com">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AFJ Farms - Home</title>
+    <meta name="description" content='Home'/>
+    <meta name="keywords" content="Home"/>
+    <meta name="csrf-token" content="ETh2KCrsxt07wkl74gL5RHQC8ymwFfrUDLngdI9L">
+    <link rel="icon" href="https://afjfarms.com/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://afjfarms.com/plugins/animate.css">
+    <link rel="stylesheet" type="text/css" href="https://afjfarms.com/plugins/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="https://afjfarms.com/plugins/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="https://afjfarms.com/plugins/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="https://afjfarms.com/plugins/flaticon.css">
+    <link rel="stylesheet" type="text/css" href="https://afjfarms.com/plugins/aos.css">
+    <link rel="stylesheet" href="https://afjfarms.com/plugins/notiflix-3.0.2.min.css" />
+
+    <link rel="stylesheet" href="/css/main.css?id=ee38ed7165285d0aeda1">
+
+        <script src="https://use.fontawesome.com/c7e51daf24.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://afjfarms.com/js/libs/jquery.min.js"></script>
+    <script src="https://afjfarms.com/js/libs/notiflix-3.0.2.min.js"></script>
+    <script src="https://afjfarms.com/js/pages/products/cart.js"></script>
+    <script>
+        function cartSubmit (e) {
+            let notifySuccess = "#008141"
+            let notifyFontFamily = "Montserrat"
+            let notifyPosition = "center-center"
+            let product = $(e).parents('form').find('.hiddenId').val();
+            var qty = $(e).parents('form').find('#cartQty').val();
+            $.ajax({
+                url: '/cart/add-to-cart',
+                type: "POST",
+                data: {
+                    _token: 'ETh2KCrsxt07wkl74gL5RHQC8ymwFfrUDLngdI9L',
+                    'product': product,
+                    'qty': qty
+                },
+                dataType: 'JSON',
+                success: function (data) {
+                    var html = '<div class="d-flex align-items-center cart-badge cartCount"><small>' + data.data.content + '</small></div>';
+                    $('.cartCount').html(html);
+                    Notiflix.Notify.init({
+                        position: notifyPosition,
+                        fontFamily: notifyFontFamily,
+                        success: {
+                            background: notifySuccess,
+                        },
+                    });
+                    Notiflix.Notify.success('Added to cart.');
+                },
+                error: function (error) {
+                    console.log('error', error)
+                },
+                complete: function (data) {
+                }
+            });
+
+            return false;
+        }
+    </script>
+</head>
+<body class="">
+<header>
+    <div class="wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 d-flex align-items-center">
+                    
+                </div>
+                <div class="col-sm-8 d-flex justify-content-end">   									                   
+                    <div class="reg">
+                        <p class="mb-0">								
+                            <a href="https://afjfarms.com/account" class="mr-4">
+                                <i class="fa fa-user"></i> 
+                                <span class="pl-1">Account</span>
+                            </a>							
+                            
+                                                            <a href="https://afjfarms.com/login"><i class="fa fa-lock"></i> <span class="pl-1">Login</span></a> 
+                                                    </p>
+                    </div>
+                    <form id="frm-logout" action="https://afjfarms.com/logout" method="POST"
+                        style="display:none;">
+                        <input type="hidden" name="_token" value="ETh2KCrsxt07wkl74gL5RHQC8ymwFfrUDLngdI9L">
+                    </form>  
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href=" https://afjfarms.com/home ">
+                <img src="https://afjfarms.com/img/logo.png" alt="afjfarms-logo" style="width:50%">
+            </a>
+            
+            <div class="order-lg-last btn-group">
+                <a href="https://afjfarms.com/cart" class="btn-cart dropdown-toggle dropdown-toggle-split" data-filter="*">
+                    <i class="fas fa-shopping-cart"></i>
+                    <div class="cartCount">
+                        <small></small>
+                    </div>
+                </a>
+                
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" 
+                aria-label="Toggle navigation" data-filter="*">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href=" https://afjfarms.com/home " class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://afjfarms.com/about-us" class="nav-link">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://afjfarms.com/products" class="nav-link">Products</a>
+                    </li>                       
+                    
+                    <li class="nav-item">
+                        <a href="https://afjfarms.com/contact-us" class="nav-link">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header><div class="hero-wrap" style="background-image: url('https://afjfarms.com/img/hero-bg.jpg');" data-stellar-background-ratio="0.5" data-aos="fade-up" data-aos-delay="200">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate d-flex align-items-end">
+                <div class="text w-100 text-center">
+                    <h1 class="mb-4">Welcome to <span>AFJ</span><span> Farms</span>.</h1>
+                    <p><a href="https://afjfarms.com/products" class="btn btn-primary py-2 px-4">Shop Now</a>
+                        <a href="https://afjfarms.com/about-us" class="btn btn-red btn-outline-red py-2 px-4">Read more</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="about">
+    <div class="container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row about-container">
+            <div class="col-lg-6 content order-lg-1 order-2">
+                <h2 class="title">WHO WE ARE</h2>
+                <p>
+                    AFJ Farms is a leading poultry farm determined to transform Agriculture in Nigeria by undertaking opportunities for growth and business that will engender sustainable food production and increased incomes for farmers.
+                </p>
+                <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="icon"><i class="fas fa-egg"></i></div>
+                    <h4 class="title"><a href="">Poultry</a></h4>
+                    <p class="description">We center on poultry to meet developing request for nourishment in Nigeria. As of now we supply eggs, chicks and other poultry produce.</p>
+                </div>
+                <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                    <div class="icon"><i class="fas fa-hand-holding"></i></div>
+                    <h4 class="title"><a href="">Farm Service</a></h4>
+                    <p class="description">This incorporates setting up of beneficial agribusinesses and bolster administrations, agro-programmes and approach drafting, agrarian programs and ventures usage, rural trainings, agro-ideation for development and approach usage.</p>
+                </div>
+                <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                    <div class="icon"><i class="fas fa-business-time"></i></div>
+                    <h4 class="title"><a href="">Farm Consultancy</a></h4>
+                    <p class="description">We trade poultry produce within Nigeria and beyond.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 background order-lg-2 order-1"></div>
+        </div>
+    </div>
+</section>
+<section id="why-us" class="why-us pt-5">
+    <div class="container">
+        <section class="gallery-section layout_padding" data-aos="zoom-in" data-aos-delay="100">
+            <div class="container">
+                <div class="heading-container">
+                    <hr>
+                    <h2>WHY CHOOSE US?</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="box" style="position:center;">
+                        <span>01</span>
+                        <div class="text-center">
+                            <h4>
+                                <div class="icon"><i class="fas fa-user-tie" style="font-size:60px;"></i></div>
+                            </h4>
+                            <p style="font-size:18px; font-weight: bold">Professionalism</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="150">
+                    <div class="box">
+                        <span>02</span>
+                        <div class="text-center">
+                            <h4>
+                                <div class="icon"><i class="fas fa-plus-circle" style="font-size:60px;"></i></div>
+                            </h4>
+                            <p style="font-size:18px; font-weight: bold">Value Added Service</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+                    <div class="box">
+                        <span>03</span>
+                        <div class="text-center">
+                            <h4>
+                                <div class="icon"><i class="fas fa-industry" style="font-size:60px;"></i></div>
+                            </h4>
+                            <p style="font-size:18px; font-weight: bold">Experienced</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+                    <div class="box">
+                        <span>04</span>
+                        <div class="text-center">
+                            <h4>
+                                <div class="icon"><i class="fas fa-check-circle" style="font-size:60px;"></i></div>
+                            </h4>
+                            <p style="font-size:18px; font-weight: bold">Integrity</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in" data-aos-delay="100">
+            <div class="text-center" data-aos="fade-up">
+                <h3>We are Expert in Poultry Business</h3>
+                <p> AFJ Farms supplies retailers and food service distributors in Ibadan and surrounding states with top quality poultry produce. Our daily produce provides the freshest product available and our location allows for timely pickup or delivery.</p>
+                <a class="cta-btn" href="https://afjfarms.com/products">SHOP ONLINE</a>
+            </div>
+        </div>
+    </section>
+    <section class="gallery-section layout_padding" data-aos="zoom-in" data-aos-delay="100">
+        <div class="container">
+            <div class="heading-container">
+                <hr>
+                <h2>Our Gallery</h2>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="gallery-container" data-aos="zoom-in" data-aos-delay="100">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="bos">
+                            <img src="https://afjfarms.com/img/african-5870014_1920.jpg" alt="">
+                            <div class="link-box">
+                                <h5>Growing Plants</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bos">
+                            <img src="https://afjfarms.com/img/natalie-rhea-vZUTCqLYR7g-unsplash.jpg" alt="">
+                            <div class="link-box">
+                                <h5>Eggs in Basket</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="bos">
+                            <img src="https://afjfarms.com/img/artem-beliaikin-Mpm69Pad_-8-unsplash.jpg" alt="">
+                            <div class="link-box">
+                                <h5>Animal House</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="bos">
+                            <img src="https://afjfarms.com/img/jason-leung-Gky4wYp9mvg-unsplash.jpg" alt="">
+                            <div class="link-box">
+                                <h5>Chicks</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="bos">
+                            <img src="https://afjfarms.com/img/katherine-chase-BzF1XBy5xOc-unsplash.jpg" alt="">
+                            <div class="link-box">
+                                <h5>Eggs in Bowl</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="bos">
+                            <img src="https://afjfarms.com/img/thomas-iversen-4W8FgDVyUME-unsplash.jpg" alt="">
+                            <div class="link-box">
+                                <h5>Chicken</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>  
+    <footer class="ftco-footer">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-sm-12 col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2 logo"><a href="https://afjfarms.com/home">AFJ<span> FARMS</span></a></h2>
+                    <p>AFJ Farms is a leading poultry farm determined to transform Agriculture in Nigeria by undertaking opportunities for growth and business</p>
+                    <ul class="ftco-footer-social list-unstyled mt-2">
+                        <li class="ftco-animate"><a href="#"><span class="fa fa-facebook text-white"></span></a></li>
+                        <li class="ftco-animate"><a href="#"><span class="fa fa-instagram text-white"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-4">
+                    <h2 class="ftco-heading-2">Quick Links</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="https://afjfarms.com/account"><span class="fa fa-chevron-right mr-2"></span>Account</a></li>
+                        <li><a href="https://afjfarms.com/register"><span class="fa fa-chevron-right mr-2"></span>Register</a></li>
+                        <li><a href="https://afjfarms.com/login"><span class="fa fa-chevron-right mr-2"></span>Log In</a></li>
+                        <li><a href="https://afjfarms.com/account"><span class="fa fa-chevron-right mr-2"></span>Orders</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md">
+                <div class="ftco-footer-widget mb-4 ml-md-4">
+                    <h2 class="ftco-heading-2">Information</h2>
+                    <ul class="list-unstyled">
+                        <li><a href="https://afjfarms.com/about-us"><span class="fa fa-chevron-right mr-2"></span>About Us</a></li>
+                        <li><a href="https://afjfarms.com/products"><span class="fa fa-chevron-right mr-2"></span>Products</a></li>
+                        <li><a href="https://afjfarms.com/contact-us"><span class="fa fa-chevron-right mr-2"></span>Contact Us</a></li>
+                        <li><a href="https://afjfarms.com/terms-of-service"><span class="fa fa-chevron-right mr-2"></span>Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="col-sm-12 col-md">
+                <div class="ftco-footer-widget mb-4">
+                    <h2 class="ftco-heading-2">Have a Questions?</h2>
+                    <div class="block-23 mb-3">
+                        <ul>
+                            <li><span class="icon fa fa-map-marker"></span><span class="text">Ibadan, Nigeria</span></li>
+                            <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">+234 392 3929 210</span></a></li>
+                            <li><a href="#"><span class="icon fa fa-envelope pr-4"></span><span class="text">info@afjfarms.com</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid px-0 py-3 bg-black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="mb-0" style="color: rgba(255,255,255,.5);">
+                        Copyright &copy;
+                        <script>
+                            document.write(new Date().getFullYear());
+                        </script> All rights reserved | Design by <a href="https://luday.se/" target="_blank">Luday</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  <a href="#" class="back-to-top"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+  <a href="https://wa.me/2349134140961" class="whatsapp_float" target="_blank"> <i class="fa fa-whatsapp whatsapp-icon"></i></a>
+</footer>
+
+<script src="https://afjfarms.com/js/libs/jquery-migrate-3.0.1.min.js"></script>
+<script src="https://afjfarms.com/js/libs/popper.min.js"></script>
+<script src="https://afjfarms.com/js/libs/bootstrap.min.js"></script>
+<script src="https://afjfarms.com/js/libs/jquery.easing.1.3.js"></script>
+<script src="https://afjfarms.com/js/libs/jquery.waypoints.min.js"></script>
+<script src="https://afjfarms.com/js/libs/jquery.stellar.min.js"></script>
+<script src="https://afjfarms.com/js/libs/owl.carousel.min.js"></script>
+<script src="https://afjfarms.com/js/libs/jquery.magnific-popup.min.js"></script>
+<script src="https://afjfarms.com/js/libs/jquery.animateNumber.min.js"></script>
+<script src="https://afjfarms.com/js/libs/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="https://afjfarms.com/js/libs/google-map.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+<script src="https://afjfarms.com/js/libs/aos/aos.js"></script>
+
+<script src="/js/main.js?id=8bbb3a36425439e5fbed"></script>
+<script>
+    function APP() {
+    }
+</script>
+
+
+</body>
+</html>
