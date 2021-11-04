@@ -1,5 +1,4 @@
 import markdownify
-import typer
 import requests
 import sys
 
