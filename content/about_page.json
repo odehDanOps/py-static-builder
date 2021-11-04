@@ -1,0 +1,41 @@
+{
+	"about_us":[
+		{
+			"heading-5":"About Us",
+			"image":"asset/img.png",
+			"class":"col-md-6 img img-3 d-flex justify-content-center align-items-center"
+		},
+		{
+			"heading":[{
+				"heading-6":"Since 2006",
+				"class":"subheading"
+			}],
+			"heading-2":"AFJ Farms",
+			"paragragh":"AFJ Farms is a leading poultry farm determined to transform Agriculture in Nigeria by undertaking opportunities for growth and business that will engender sustainable food production and increased incomes for farmers."
+		}
+	],
+	"contact_us":[
+		{
+			"row":[
+				{
+					"heading-4":"Location",
+					"paragraph":"AFJ Farms",
+					"icon":"fa fa-map-marker",
+					"class":"col-lg-4 info mt-4 mt-lg-0"
+				},
+				{
+					"heading-4":"Email:",
+					"paragraph":"support@afjfarms.com",
+					"icon":"fa fa-envelope",
+					"class":"col-lg-4 info mt-4 mt-lg-0"
+				},
+				{
+					"heading-4":"Call:",
+					"paragraph":"+234 5589 55488 51",
+					"icon":"fa fa-phone",
+					"class":"col-lg-4 info mt-4 mt-lg-0"
+				}
+			]
+		}
+	 ]
+ }  

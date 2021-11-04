@@ -1,3 +1,4 @@
+from re import template
 import shutil
 import sys
 
@@ -7,6 +8,8 @@ from pathlib import Path
 from docutils.core import publish_parts
 from markdown import markdown
 from ssg.content import Content
+
+import json as luday_parser
 
 
 class Parser:
@@ -60,3 +63,30 @@ class ReStructuredTextParser(Parser):
         sys.stdout.write(
             "\x1b[1;32m{} converted to HTML. Metadata: {}\n".format(path.name, content)
         )
+
+class LudayParser(Parser):
+    extensions = [".json"]
+
+    def parse(self, path, source, dest):
+        """
+            Convert JSON to HTML format
+        """
+        # template = {about_us_1:/templateFolder/about_us_1, about_us_2:/templateFoler/about_us_2}
+        # content = Content.load(self.read(path))
+        # loop: for each line in content:
+        # for x in content:
+            # if x == "heading_1":
+                # dic = 
+        #   if line is equal to #page:
+            #   pageDic =  getNextLine
+            #   if(pageDec.name equal to about_us):
+                #   write /templateFolder/about_us to destination folder
+            #   elseif((pageDec.name equal to contact):
+                #   write /templateFolder/about_us_2 to destination folder
+        #  nextline            
+
+        # html = publish_parts(content.body, writer_name="html5")
+        # self.write(path, dest, html["html_body"])
+        # sys.stdout.write(
+            # "\x1b[1;32m{} converted to HTML. Metadata: {}\n".format(path.name, content)
+        # )
