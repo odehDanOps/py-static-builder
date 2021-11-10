@@ -4,7 +4,7 @@ from ssg.site import Site
 import ssg.parsers
 
 
-def main(source="content", dest="temp"):
+def main(source="content", dest="dist"):
     config = {
         "source": source,
         "dest": dest,
@@ -12,6 +12,7 @@ def main(source="content", dest="temp"):
             ssg.parsers.ResourceParser(),
             ssg.parsers.MarkdownParser(),
             ssg.parsers.ReStructuredTextParser(),
+            ssg.parsers.LudayHtmlParser(),
         ],
     }
     Site(**config).build()
