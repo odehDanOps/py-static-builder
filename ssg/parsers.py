@@ -1,6 +1,7 @@
 from re import template
 import shutil
 import sys
+import os
 
 from typing import List
 from pathlib import Path
@@ -33,6 +34,7 @@ class Parser:
 
     def copy(self, path, source, dest):
         shutil.copy2(path, dest / path.relative_to(source))
+        # print(path)
 
 
 class ResourceParser(Parser):
@@ -65,19 +67,6 @@ class ReStructuredTextParser(Parser):
             "\x1b[1;32m{} converted to HTML. Metadata: {}\n".format(path.name, content)
         )
 
-# Escape quotes and apostrophes
-# Python 3.2 and above has html module with html.escape()
-# The escape function converts <, > and & characters into html-safe sequences.
-if sys.version_info[:2] < (3, 0):
-    from cgi import escape as html_escape
-    text = unicode
-    text_types = (unicode, str)
-else:
-    from html import escape as html_escape
-    # strings are unicode by default in Python3.
-    text = str
-    text_types = (str,)
-
 class LudayHtmlParser(Parser):
     # template = {about_us_1:/templateFolder/about_us_1, about_us_2:/templateFoler/about_us_2}
         # content = Content.load(self.read(path))
@@ -96,10 +85,6 @@ class LudayHtmlParser(Parser):
     extensions = [".json"]
 
     def parse(self, path, source, dest):
-        template = {
-            "about_us_1": "template/about_us_1.html", 
-            "about_us_2": "template/about_us_2.html"
-        }
 
         obj = luday_parser.load(open(path))
         content = None
@@ -113,11 +98,28 @@ class LudayHtmlParser(Parser):
                 raise e
 
         # dir(content)
-        for key, value in content.items():
-            if key == "page_1" and value == "about_us_1":
-                shutil.copy2(template["about_us_1"], dest)
-            elif key == "page_2" and value == "about_us_2":
-                shutil.copy2(template["about_us_2"], dest)
+        templateName = content['template']
+        if content['type'] == "website":
+            """Loop through pages"""
+            for page in content['pages']:
+                if page['framework'] == "bootstrap":
+                    filePath = "framework/bootstrap/main/"+templateName+"/"+page['name']+".html"
+                    pageName = page['name']+".html"
+                    if os.path.exists(filePath):
+                        pointer = {
+                            page['name']: filePath
+                        }
+                        shutil.copy2(pointer[page['name']], dest)
+                        with open(dest / pageName,"a") as file:
+                            file.write('<script></script>')
+                        print(filePath, source, dest)
+                # print(pages['sections'])
+        # for key, value in pages.items():
+        #     if key == "page_1" and value == "about_us_1":
+        #         print(key)
+        #         shutil.copy2(pointer["about_us_1"], dest)
+        #     elif key == "page_2" and value == "about_us_2":
+        #         shutil.copy2(pointer["about_us_2"], dest)
 
 class JSONtoHTMLParser(Parser):
     extensions = [".json"]
