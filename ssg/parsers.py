@@ -110,8 +110,10 @@ class LudayHtmlParser(Parser):
                             page['name']: filePath
                         }
                         shutil.copy2(pointer[page['name']], dest)
-                        with open(dest / pageName,"a") as file:
-                            file.write('<script></script>')
+                        if page['css_file']:
+                            print(page['css_file'])
+                        # with open(dest / pageName,"a") as file:
+                        #     file.write('<script></script>')
                         print(filePath, source, dest)
                 # print(pages['sections'])
         # for key, value in pages.items():
