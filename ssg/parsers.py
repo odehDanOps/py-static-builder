@@ -67,21 +67,7 @@ class ReStructuredTextParser(Parser):
             "\x1b[1;32m{} converted to HTML. Metadata: {}\n".format(path.name, content)
         )
 
-class LudayHtmlParser(Parser):
-    # template = {about_us_1:/templateFolder/about_us_1, about_us_2:/templateFoler/about_us_2}
-        # content = Content.load(self.read(path))
-        # loop: for each line in content:
-        # for x in content:
-            # if x == "heading_1":
-                # dic = 
-        #   if line is equal to #page:
-            #   pageDic =  getNextLine
-            #   if(pageDec.name equal to about_us):
-                #   write /templateFolder/about_us to destination folder
-            #   elseif((pageDec.name equal to contact):
-                #   write /templateFolder/about_us_2 to destination folder
-        #  nextline            
-
+class LudayHtmlParser(Parser):         
     extensions = [".json"]
 
     def parse(self, path, source, dest):
@@ -97,114 +83,39 @@ class LudayHtmlParser(Parser):
             except ValueError as e:
                 raise e
 
-        # dir(content)
         templateName = content['template']
+        templateDist = dest / templateName
         if content['type'] == "website":
             """Loop through pages"""
             for page in content['pages']:
                 if page['framework'] == "bootstrap":
-                    filePath = "framework/bootstrap/main/"+templateName+"/"+page['name']+".html"
+                    filePath = "web/bootstrap/main/"+templateName+"/"+page['name']+".html"
                     pageName = page['name']+".html"
+                    # check if file path exits
                     if os.path.exists(filePath):
                         pointer = {
                             page['name']: filePath
                         }
-                        shutil.copy2(pointer[page['name']], dest)
-                        if page['css_file']:
-                            print(page['css_file'])
-                        # with open(dest / pageName,"a") as file:
-                        #     file.write('<script></script>')
-                        print(filePath, source, dest)
-                # print(pages['sections'])
-        # for key, value in pages.items():
-        #     if key == "page_1" and value == "about_us_1":
-        #         print(key)
-        #         shutil.copy2(pointer["about_us_1"], dest)
-        #     elif key == "page_2" and value == "about_us_2":
-        #         shutil.copy2(pointer["about_us_2"], dest)
+                        cssFolder = "css"
+                        templateDist = dest / templateName
+                        templateCssDist = dest / templateName / cssFolder
 
-class JSONtoHTMLParser(Parser):
-    extensions = [".json"]
+                        templateDist.mkdir(parents=True, exist_ok=True)
+                        templateCssDist.mkdir(parents=True, exist_ok=True)
 
-    def parse(self, path, source, dest, div_attributes="", encode=False):
-        """
-            Convert JSON to HTML format
-        """
-        # div attributes such as class, id, data-attr-*, etc.
-        # eg: div_attributes = 'class = "col-md-6 d-flex"'
-        self.div_init_markup = "<div %s>" % div_attributes
-        json_input = None
-        content = Content.load(self.read(path))
-        if not content:
-            json_input = {}
-        elif type(content) in text_types:
-            """if <class 'str'>"""
-            try:
-                """{'key': 'value'} => OrderedDict([('key', 'value')])"""
-                json_input = luday_parser.loads(content, object_pairs_hook=OrderedDict)
-            except ValueError as e:
-                # the string passed here is not a json string
-                # let's analyze whether we want to pass on the error or use the string as-is as a text node
-                if u"Expecting property name" in text(e):
-                    #if this specific json loads error is raised, then the user probably actually wanted to pass json, but made a mistake
-                    raise e
-                json_input = content
-        else:
-            json_input = content
-            converted = self.convert_json_node(json_input)
-        if encode:
-            return converted.encode('ascii', 'xmlcharrefreplace')
-        return json_input
-
-    def convert_json_node(self, json_input):
-        """
-            Dispatch JSON input according to the outermost type and process it
-            to generate the super awesome HTML format.
-            We try to adhere to duck typing such that users can just pass all kinds
-            of funky objects to LudayParser that *behave* like dicts and lists and other
-            basic JSON types.
-        """
-        if type(json_input) in text_types:
-            if self.escape:
-                return html_escape(text(json_input))
-            else:
-                return text(json_input)
-        # dir(json_input)
-        if hasattr(json_input, 'items'):
-            return self.convert_object(json_input)
-        if hasattr(json_input, '__iter__') and hasattr(json_input, '__getitem__'):
-            return self.convert_list(json_input)
-        return text(json_input)
-
-    def convert_list(self, list_input):
-        """"
-            Iterate over the JSON list and process it
-            to generate either an HTML  
-        """
-        if not list_input:
-            return ""
-        converted_output = ""
-        column_headers = None
-        # if self.clubbing:
-            # column_headers = self.column_headers_from_list_of_dicts(list_input)
-        if column_headers is not None:
-            converted_output += self.div_init_markup
-            converted_output += '<thead>'
-            converted_output += '<tr><th>' + '</th><th>'.join(column_headers) + '</th></tr>'
-            converted_output += '</thead>'
-            converted_output += '<tbody>'
-            for list_entry in list_input:
-                converted_output += '<tr><td>'
-                converted_output += '</td><td>'.join([self.convert_json_node(list_entry[column_header]) for column_header in
-                                                     column_headers])
-                converted_output += '</td></tr>'
-            converted_output += '</tbody>'
-            converted_output += '</table>'
-            return converted_output
-
-        #so you don't want or need clubbing eh? This makes @muellermichel very sad... ;(
-        #alright, let's fall back to a basic list here...
-        converted_output = '<ul><li>'
-        converted_output += '</li><li>'.join([self.convert_json_node(child) for child in list_input])
-        converted_output += '</li></ul>'
-        return converted_output
+                        cssFilePath = page['css_file']
+                        shutil.copy2(pointer[page['name']], templateDist)
+                        if cssFilePath:
+                            with open(templateDist / pageName, 'r+', encoding='UTF-8') as file:
+                                while (line := file.readline().rstrip()):
+                            
+                                    cssComment = "<!-- Core theme CSS-->"
+                                    if cssComment in line:
+                                        # copy css file
+                                        cssFile = "web/bootstrap/head/"+templateName+"/css/"+cssFilePath
+                                        assert os.path.exists(cssFile)
+                                        with open(cssFile, "wb") as cssDir:
+                                            shutil.copy2(cssFile, templateCssDist)
+                                            # file.write('\n<link rel="stylesheet" href="css/bootstrap-v5-1-3.css">')
+                                        # insert CSS script
+                                        print(line)
